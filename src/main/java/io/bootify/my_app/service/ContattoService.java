@@ -12,11 +12,17 @@ import io.bootify.my_app.repos.ContattoRepository;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
+
 @Service
 public class ContattoService {
     
     @Autowired
     private ContattoRepository contattoRepository;
+
+    @Autowired
+    EntityManager entityManager ;
     
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -43,6 +49,18 @@ public class ContattoService {
     
     public Contatto save(Contatto contatto) {
         return contattoRepository.save(contatto);
+    }
+
+    @Transactional
+    public void savEntity(Long id, String name) {
+
+        Contatto contatto = new Contatto();
+        contatto.setId(id);
+        contatto.setNome(name);
+        contatto.setCognome("cogn-"+name);
+        entityManager.persist(contatto);
+
+        
     }
     
     public void deleteById(Long id) {
