@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,12 +18,22 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-public class TutorialController {
+public class GenericQueryController {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
-
-    @PostMapping("/tutorial")
+    /*
+    curl -X POST   -H "Content-Type: application/json"   -d '{
+	"page": 0,
+    "limit": 3,
+    "sortField": "cognome",
+    "sortOrder": "asc",
+    "filters": [
+      {"field": "cognome", "value": "Williams"}
+    ]
+  }'   http://localhost:8080/query?tableName=rubrica
+     */
+    @PostMapping("/query")
     public ResponseEntity<Map<String, Object>> getData(
             @RequestParam String tableName,
             @RequestBody QueryFilter tutorialRequest
