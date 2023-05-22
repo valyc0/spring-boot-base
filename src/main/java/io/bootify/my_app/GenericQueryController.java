@@ -62,10 +62,10 @@ public class GenericQueryController {
 
                 queryBuilder.append(" ")
                         .append(field)
-                        .append(" = ?");
+                        .append(" LIKE ?");
 
-                //queryParams.add("%" + value + "%");
-                queryParams.add(value);
+                queryParams.add("%" + value + "%");
+                //queryParams.add(value);
 
                 if (i < filters.size() - 1) {
                     queryBuilder.append(" AND");
